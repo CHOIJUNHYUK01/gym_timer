@@ -1,1 +1,1 @@
-# gym_timer
+# Eclipse Timer

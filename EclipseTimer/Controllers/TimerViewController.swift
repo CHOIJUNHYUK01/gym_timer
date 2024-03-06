@@ -13,6 +13,12 @@ class TimerViewController: UIViewController {
     private let workingView = WorkingView()
     private let restView = RestView()
     
+    private var ourAudioIsPlaying = false
+    
+    private let audioSession = AVAudioSession.sharedInstance()
+    
+    let queue = DispatchQueue(label: "backgroundAudio", qos: .userInitiated, target: nil)
+    
     var timer: Timer?
     
     var totalSeconds: Int? {
@@ -49,8 +55,14 @@ class TimerViewController: UIViewController {
             elaspedTime = 0
             restView.restTime = elaspedTime
             view = workingView
+            queue.async {
+                sleep(1)
+                self.focusOtherAppAudio()
+            }
             return
         }
+        
+        if elaspedTime == t - 4 { focusAudioOurApp() }
         
         if elaspedTime >= t - 3 {
             AudioServicesPlaySystemSound(SystemSoundID(1302))
@@ -61,7 +73,23 @@ class TimerViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        ourAudioIsPlaying = false
         timer?.invalidate()
         elaspedTime = 0
+    }
+    
+    func focusAudioOurApp() {
+        guard audioSession.isOtherAudioPlaying == true && ourAudioIsPlaying == false else { return }
+        ourAudioIsPlaying = true
+        queue.async {
+            try? self.audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+            try? self.audioSession.setCategory(.playback, mode: .default, options: [.duckOthers])
+        }
+    }
+    
+    func focusOtherAppAudio() {
+        guard ourAudioIsPlaying == true else { return }
+        ourAudioIsPlaying = false
+        try? self.audioSession.setActive(false, options: .notifyOthersOnDeactivation)
     }
 }

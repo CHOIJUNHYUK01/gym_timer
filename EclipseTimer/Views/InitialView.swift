@@ -23,7 +23,7 @@ class InitialView: UIView {
     // MARK: 시간 선택 타이틀
     private let timeSelectLabel: UILabel = {
         let label = UILabel()
-        label.text = "Set Rest Time"
+        label.text = "쉬는 시간 설정"
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.textColor = .white
         return label
@@ -56,7 +56,7 @@ class InitialView: UIView {
     
     private let minutePickerLabel: UILabel = {
         let label = UILabel()
-        label.text = "min"
+        label.text = "분"
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .white
         return label
@@ -80,7 +80,7 @@ class InitialView: UIView {
     
     private let secondPickerLabel: UILabel = {
         let label = UILabel()
-        label.text = "sec"
+        label.text = "초"
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .white
         return label

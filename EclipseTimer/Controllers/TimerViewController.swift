@@ -10,25 +10,33 @@ import AVFoundation
 
 class TimerViewController: UIViewController {
     
+    // view
     private let workingView = WorkingView()
     private let restView = RestView()
     
+    // audio session
     private var ourAudioIsPlaying = false
-    
     private let audioSession = AVAudioSession.sharedInstance()
+    private let queue = DispatchQueue(label: "backgroundAudio", qos: .userInitiated, target: nil)
     
-    let queue = DispatchQueue(label: "backgroundAudio", qos: .userInitiated, target: nil)
-    
-    var timer: Timer?
-    
+    // timer params
+    private var timer: Timer?
     var totalSeconds: Int? {
         didSet {
             guard let _ = totalSeconds else { return }
             restView.restTime = 0
         }
     }
+    private var elaspedTime = 0
     
-    var elaspedTime = 0
+    // volume params
+    private lazy var volume = self.audioSession.outputVolume {
+        willSet {
+            if view == workingView {
+                changeToRestView()
+            }
+        }
+    }
     
     override func loadView() {
         view = workingView
@@ -38,12 +46,33 @@ class TimerViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .black
+        setAudio()
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    private func setAudio() {
+        queue.async {
+            try? self.audioSession.setCategory(.playback, mode: .default, options: [.mixWithOthers])
+            try? self.audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+        }
+        
+        audioSession.addObserver(self, forKeyPath: "outputVolume", options: NSKeyValueObservingOptions.new, context: nil)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+      if keyPath == "outputVolume" {
+          self.volume = audioSession.outputVolume
+      }
+    }
+    
+    private func changeToRestView() {
+        AudioServicesPlaySystemSound(SystemSoundID(1331))
         view = restView
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countUp), userInfo: nil, repeats: true)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        changeToRestView()
     }
     
     @objc func countUp() {
@@ -71,18 +100,12 @@ class TimerViewController: UIViewController {
         elaspedTime += 1
         restView.restTime = elaspedTime
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        ourAudioIsPlaying = false
-        timer?.invalidate()
-        elaspedTime = 0
-    }
+
     
     func focusAudioOurApp() {
         guard audioSession.isOtherAudioPlaying == true && ourAudioIsPlaying == false else { return }
         ourAudioIsPlaying = true
         queue.async {
-            try? self.audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             try? self.audioSession.setCategory(.playback, mode: .default, options: [.duckOthers])
         }
     }
@@ -90,6 +113,18 @@ class TimerViewController: UIViewController {
     func focusOtherAppAudio() {
         guard ourAudioIsPlaying == true else { return }
         ourAudioIsPlaying = false
-        try? self.audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+        queue.async {
+            try? self.audioSession.setCategory(.playback, mode: .default, options: [.mixWithOthers])
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        queue.async {
+            try? self.audioSession.setActive(false)
+        }
+        audioSession.removeObserver(self, forKeyPath: "outputVolume", context: nil)
+        ourAudioIsPlaying = false
+        timer?.invalidate()
+        elaspedTime = 0
     }
 }

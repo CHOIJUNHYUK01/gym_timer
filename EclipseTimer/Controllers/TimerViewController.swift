@@ -29,10 +29,25 @@ class TimerViewController: UIViewController {
     }
     private var elaspedTime = 0
     
-    // volume params
+    // airpods control params
     private lazy var volume = self.audioSession.outputVolume {
         willSet {
             if view == workingView {
+                changeToRestView()
+            }
+        }
+    }
+    private lazy var isBGMplaying = self.audioSession.isOtherAudioPlaying {
+        willSet {
+            if !newValue && view == workingView {
+                changeToRestView()
+            }
+        }
+    }
+    
+    private lazy var bgmIsPlaying = self.audioSession.isOtherAudioPlaying {
+        willSet {
+            if !newValue && view == workingView {
                 changeToRestView()
             }
         }
@@ -47,6 +62,7 @@ class TimerViewController: UIViewController {
         
         view.backgroundColor = .black
         setAudio()
+        checkBGMplaying()
     }
     
     private func setAudio() {
@@ -58,14 +74,23 @@ class TimerViewController: UIViewController {
         audioSession.addObserver(self, forKeyPath: "outputVolume", options: NSKeyValueObservingOptions.new, context: nil)
     }
     
+    private func checkBGMplaying() {
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(isPlaying), userInfo: nil, repeats: true)
+    }
+    
+    @objc func isPlaying() {
+        isBGMplaying = audioSession.isOtherAudioPlaying
+    }
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-      if keyPath == "outputVolume" {
-          self.volume = audioSession.outputVolume
-      }
+        if keyPath == "outputVolume" {
+            volume = audioSession.outputVolume
+        }
     }
     
     private func changeToRestView() {
-        AudioServicesPlaySystemSound(SystemSoundID(1331))
+        AudioServicesPlaySystemSound(SystemSoundID(1300))
         view = restView
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countUp), userInfo: nil, repeats: true)
@@ -80,7 +105,7 @@ class TimerViewController: UIViewController {
         
         if elaspedTime == t {
             AudioServicesPlaySystemSound(SystemSoundID(1016))
-            timer?.invalidate()
+            checkBGMplaying()
             elaspedTime = 0
             restView.restTime = elaspedTime
             view = workingView

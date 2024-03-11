@@ -12,12 +12,15 @@ final class ViewController: UIViewController {
     private let initialView = InitialView()
     private lazy var minutePickerView = initialView.minutePickerView
     private lazy var secondPickerView = initialView.secondPickerView
+    private lazy var restPickerView = initialView.restPickerView
     private lazy var startTimerButton = initialView.playButton
     
     var minuteSelected = 1
     var secondSelected = 30
+    var restMethodSelected = 1
     
     var timeRangeManager = TimeRangeManager()
+    var restMethodManager = RestMethodManager()
     
     override func loadView() {
         view = initialView
@@ -36,9 +39,12 @@ final class ViewController: UIViewController {
     
     func setPickerViewOptions() {
         minutePickerView.delegate = self
-        minutePickerView.dataSource = self
         secondPickerView.delegate = self
+        restPickerView.delegate = self
+        
+        minutePickerView.dataSource = self
         secondPickerView.dataSource = self
+        restPickerView.dataSource = self
     }
     
     func setData() {
@@ -48,6 +54,7 @@ final class ViewController: UIViewController {
     func setPickerViewDefaultValue() {
         minutePickerView.selectRow(1, inComponent: 0, animated: true)
         secondPickerView.selectRow(30, inComponent: 0, animated: true)
+        restPickerView.selectRow(1, inComponent: 0, animated: true)
     }
     
     func setTimerButtonAction() {
@@ -57,6 +64,7 @@ final class ViewController: UIViewController {
     @objc func startTimerTapped() {
         let timerVC = TimerViewController()
         timerVC.totalSeconds = 60 * minuteSelected + secondSelected
+        timerVC.restMethod = restMethodSelected
         show(timerVC, sender: nil)
     }
 }
@@ -69,48 +77,88 @@ extension ViewController: UIPickerViewDataSource {
     
     // 각 컴포넌트 별 옵션 개수
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == minutePickerView {
+        switch pickerView {
+        case minutePickerView:
             return timeRangeManager.getMinutes().count
+        case secondPickerView:
+            return timeRangeManager.getSeconds().count
+        case restPickerView:
+            return restMethodManager.getRestMethods().count
+        default:
+            return 0
         }
-        return timeRangeManager.getSeconds().count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == minutePickerView {
+        switch pickerView {
+        case minutePickerView:
             return String(timeRangeManager.getMinutes()[row])
+        case secondPickerView:
+            return String(timeRangeManager.getSeconds()[row])
+        case restPickerView:
+            return restMethodManager.getRestMethods()[row]
+        default:
+            return ""
         }
-        return String(timeRangeManager.getSeconds()[row])
     }
 }
 
 extension ViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == minutePickerView {
+        switch pickerView {
+        case minutePickerView:
             self.minuteSelected = timeRangeManager.getMinutes()[row]
-        } else {
+        case secondPickerView:
             self.secondSelected = timeRangeManager.getSeconds()[row]
+        case restPickerView:
+            self.restMethodSelected = row
+        default:
+            break
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 64
+        return 60
     }
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        return 80
+        switch pickerView {
+        case minutePickerView, secondPickerView:
+            return 80
+        case restPickerView:
+            return 240
+        default:
+            return 0
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 44, weight: .bold)
-        label.textColor = .yellow
-        label.textAlignment = .center
-        
-        if pickerView == minutePickerView {
-            label.text = String(timeRangeManager.getMinutes()[row])
+        switch pickerView {
+        case minutePickerView, secondPickerView:
+            let label = UILabel()
+            label.font = UIFont.systemFont(ofSize: 44, weight: .bold)
+            label.textColor = .yellow
+            label.textAlignment = .center
+            
+            if pickerView == minutePickerView {
+                label.text = String(timeRangeManager.getMinutes()[row])
+                return label
+            }
+            label.text = String(timeRangeManager.getSeconds()[row])
+            return label
+        case restPickerView:
+            let label = UILabel()
+            label.font = UIFont.systemFont(ofSize: 36, weight: .bold)
+            label.textColor = .yellow
+            label.textAlignment = .right
+            label.text = restMethodManager.getRestMethods()[row]
+            return label
+        default:
+            let label = UILabel()
+            label.text = "오류가 발생했습니다."
+            label.textAlignment = .center
+            label.textColor = .yellow
             return label
         }
-        label.text = String(timeRangeManager.getSeconds()[row])
-        return label
     }
 }

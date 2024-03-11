@@ -26,7 +26,7 @@ class RestView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 36, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 44, weight: .bold)
         label.textColor = .white
         label.text = "휴식 중"
         return label

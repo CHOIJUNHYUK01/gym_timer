@@ -12,77 +12,68 @@ class InitialView: UIView {
     private let playButtonSize: CGFloat = 88
     
     // MARK: 시간 선택 스택뷰
-    private lazy var timeSelectStack: UIStackView = {
-        let st = UIStackView(arrangedSubviews: [timeSelectLabel, timePickerStack, buttonStackView])
+    private lazy var timeSelectStackView: UIStackView = {
+        let st = UIStackView(arrangedSubviews: [timePickerStackView, restPickerStackView])
         st.axis = .vertical
-        st.spacing = 20
-        st.alignment = .fill
+        st.alignment = .center
+        st.spacing = 0
         return st
-    }()
-    
-    // MARK: 시간 선택 타이틀
-    private let timeSelectLabel: UILabel = {
-        let label = UILabel()
-        label.text = "쉬는 시간 설정"
-        label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
-        label.textColor = .white
-        return label
     }()
     
     // MARK: 피커뷰 스택뷰
-    private lazy var timePickerStack: UIStackView = {
-        let st = UIStackView(arrangedSubviews: [minutePickerStackView, secondPickerStackView])
+    private lazy var timePickerStackView: UIStackView = {
+        let st = UIStackView(arrangedSubviews: [minutePickerView, pickerDividerLabel, secondPickerView])
         st.axis = .horizontal
         st.spacing = 0
-        st.distribution = .fillEqually
-        return st
-    }()
-    
-    // MARK: 분 선택 스택뷰
-    private lazy var minutePickerStackView: UIStackView = {
-        let st = UIStackView(arrangedSubviews: [minutePickerView, minutePickerLabel])
-        st.axis = .horizontal
-        st.spacing = 0
-        st.distribution = .fillEqually
+        st.distribution = .fill
         return st
     }()
     
     // MARK: 분 선택 피커뷰
     lazy var minutePickerView: UIPickerView = {
-        let tp = UIPickerView()
-        tp.backgroundColor = .black
-        return tp
+        let pv = UIPickerView()
+        pv.backgroundColor = .black
+        return pv
     }()
     
-    private let minutePickerLabel: UILabel = {
+    private let pickerDividerLabel: UILabel = {
         let label = UILabel()
-        label.text = "분"
+        label.text = ":"
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .white
+        label.textAlignment = .center
         return label
-    }()
-    
-    // MARK: 초 선택 스택뷰
-    private lazy var secondPickerStackView: UIStackView = {
-        let st = UIStackView(arrangedSubviews: [secondPickerView, secondPickerLabel])
-        st.axis = .horizontal
-        st.spacing = 0
-        st.distribution = .fillEqually
-        return st
     }()
     
     // MARK: 초 선택 피커뷰
     lazy var secondPickerView: UIPickerView = {
-        let tp = UIPickerView()
-        tp.backgroundColor = .black
-        return tp
+        let pv = UIPickerView()
+        pv.backgroundColor = .black
+        return pv
     }()
     
-    private let secondPickerLabel: UILabel = {
+    // MARK: 휴식 방법 스택뷰
+    private lazy var restPickerStackView: UIStackView = {
+        let st = UIStackView(arrangedSubviews: [restPickerView, restPickerLabel])
+        st.axis = .horizontal
+        st.spacing = 4
+        st.distribution = .equalSpacing
+        return st
+    }()
+    
+    // MARK: 휴식 방법 피커뷰
+    lazy var restPickerView: UIPickerView = {
+        let pv = UIPickerView()
+        pv.backgroundColor = .black
+        return pv
+    }()
+    
+    private let restPickerLabel: UILabel = {
         let label = UILabel()
-        label.text = "초"
+        label.text = "로 쉴래요."
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
@@ -107,7 +98,6 @@ class InitialView: UIView {
         button.layer.cornerRadius = playButtonSize / 2
         return button
     }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -120,20 +110,70 @@ class InitialView: UIView {
     }
     
     func addViews() {
-        [timeSelectStack].forEach { addSubview($0) }
+        [timeSelectStackView, buttonStackView].forEach { addSubview($0) }
     }
     
     private func setConstraints() {
-        timeSelectStackConstraints()
+        timeSelectStackViewConstraints()
+        
+        timePickerStackViewConstraints()
+        
+        timePickerViewConstraints()
+        restPickerViewConstraints()
+        
+        pickerDividerLabelConstraints()
+        buttonStackViewConstraints()
     }
     
-    private func timeSelectStackConstraints() {
-        timeSelectStack.translatesAutoresizingMaskIntoConstraints = false
+    private func timeSelectStackViewConstraints() {
+        timeSelectStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            timeSelectStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            timeSelectStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            timeSelectStack.centerYAnchor.constraint(equalTo: centerYAnchor)
+            timeSelectStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            timeSelectStackView.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
+    }
+    
+    private func timePickerStackViewConstraints() {
+        timePickerStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            timePickerStackView.heightAnchor.constraint(equalToConstant: 144)
+        ])
+    }
+    
+    private func pickerDividerLabelConstraints() {
+        pickerDividerLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            pickerDividerLabel.widthAnchor.constraint(equalToConstant: 16)
+        ])
+    }
+    
+    private func timePickerViewConstraints() {
+        minutePickerView.translatesAutoresizingMaskIntoConstraints = false
+        secondPickerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            minutePickerView.widthAnchor.constraint(equalToConstant: 80),
+            secondPickerView.widthAnchor.constraint(equalToConstant: 80)
+        ])
+    }
+    
+    private func restPickerViewConstraints() {
+        restPickerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            restPickerView.widthAnchor.constraint(equalToConstant: 240)
+        ])
+    }
+    
+    private func buttonStackViewConstraints() {
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            buttonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            buttonStackView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 }

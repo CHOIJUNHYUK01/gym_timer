@@ -29,17 +29,18 @@ class TimerViewController: UIViewController {
     }
     private var elaspedTime = 0
     
-    // airpods control params
+    // control params
+    var restMethod: Int?
     private lazy var volume = self.audioSession.outputVolume {
         willSet {
-            if view == workingView {
+            if restMethod == 1 && view == workingView {
                 changeToRestView()
             }
         }
     }
     private lazy var isBGMplaying = self.audioSession.isOtherAudioPlaying {
-        willSet {
-            if !newValue && view == workingView {
+        didSet {
+            if restMethod == 2 && oldValue && !isBGMplaying && view == workingView {
                 changeToRestView()
             }
         }
@@ -97,7 +98,9 @@ class TimerViewController: UIViewController {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        changeToRestView()
+        if restMethod == 0 {
+            changeToRestView()
+        }
     }
     
     @objc func countUp() {

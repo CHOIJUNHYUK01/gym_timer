@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		512CC2132B9EFAB1000A7E7C /* RestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512CC2122B9EFAB1000A7E7C /* RestMethod.swift */; };
 		514293522B959D7C00545674 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514293512B959D7C00545674 /* AppDelegate.swift */; };
 		514293542B959D7C00545674 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514293532B959D7C00545674 /* SceneDelegate.swift */; };
 		514293562B959D7C00545674 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514293552B959D7C00545674 /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		512CC2122B9EFAB1000A7E7C /* RestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestMethod.swift; sourceTree = "<group>"; };
 		5142934E2B959D7C00545674 /* EclipseTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EclipseTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		514293512B959D7C00545674 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		514293532B959D7C00545674 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				5142936A2B95BAF800545674 /* TimeRange.swift */,
+				512CC2122B9EFAB1000A7E7C /* RestMethod.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				514293562B959D7C00545674 /* ViewController.swift in Sources */,
 				514293712B97101000545674 /* RestView.swift in Sources */,
 				514293692B95A0F800545674 /* InitialView.swift in Sources */,
+				512CC2132B9EFAB1000A7E7C /* RestMethod.swift in Sources */,
 				5142936B2B95BAF800545674 /* TimeRange.swift in Sources */,
 				514293522B959D7C00545674 /* AppDelegate.swift in Sources */,
 				5142936D2B97002E00545674 /* TimerViewController.swift in Sources */,

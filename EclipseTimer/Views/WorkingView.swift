@@ -10,15 +10,16 @@ import Lottie
 
 class WorkingView: UIView {
     
+    // MARK: 타이틀
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 44, weight: .bold)
         label.textColor = .white
-        label.numberOfLines = 2
-        label.text = "쉬어야 할 때\n화면을 터치하세요."
+        label.text = "집중 중"
         return label
     }()
     
+    // MARK: 로띠 관련 뷰
     private lazy var lottieContainerView: UIView = {
         let view = UIView()
         view.addSubview(animationView)

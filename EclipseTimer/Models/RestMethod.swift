@@ -8,7 +8,7 @@
 import Foundation
 
 class RestMethodManager {
-    private var restMethods = ["화면 터치", "음량 조절", "음악 일시정지"]
+    private var restMethods = [String(localized: "Touch Screen"), String(localized: "Control Volume"), String(localized: "Pause Music")]
     
     func getRestMethods() -> [String] {
         return self.restMethods

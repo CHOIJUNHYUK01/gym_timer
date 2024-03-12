@@ -70,7 +70,7 @@ class InitialView: UIView {
     
     private let restPickerLabel: UILabel = {
         let label = UILabel()
-        label.text = "로 쉴래요."
+        label.text = String(localized: "Setting Label")
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .white
         label.textAlignment = .center

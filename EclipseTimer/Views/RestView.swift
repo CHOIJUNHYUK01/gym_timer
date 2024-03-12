@@ -28,7 +28,7 @@ class RestView: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 44, weight: .bold)
         label.textColor = .white
-        label.text = "휴식 중"
+        label.text = String(localized: "Rest Mode")
         return label
     }()
     

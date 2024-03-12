@@ -15,7 +15,7 @@ class WorkingView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 44, weight: .bold)
         label.textColor = .white
-        label.text = "집중 중"
+        label.text = String(localized: "Focus Mode")
         return label
     }()
     

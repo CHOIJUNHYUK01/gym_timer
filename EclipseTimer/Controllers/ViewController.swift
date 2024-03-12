@@ -148,14 +148,14 @@ extension ViewController: UIPickerViewDelegate {
             return label
         case restPickerView:
             let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 36, weight: .bold)
+            label.font = UIFont.systemFont(ofSize: NSLocale.preferredLanguages[0] == "ko-KR" ? 36 : 32, weight: .bold)
             label.textColor = .yellow
             label.textAlignment = .right
             label.text = restMethodManager.getRestMethods()[row]
             return label
         default:
             let label = UILabel()
-            label.text = "오류가 발생했습니다."
+            label.text = String(localized: "Error")
             label.textAlignment = .center
             label.textColor = .yellow
             return label

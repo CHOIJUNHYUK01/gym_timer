@@ -17,6 +17,7 @@ Pods/
 ## Build generated
 build/
 DerivedData/
+GoogleService-Info.plist
 
 ## Various settings
 *.pbxuser

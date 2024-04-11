@@ -10,12 +10,33 @@ import Lottie
 
 class WorkingView: UIView {
     
+    var setCount = 1 {
+        didSet {
+            setLabel.text = "\(setCount) Set"
+        }
+    }
+    
     // MARK: 타이틀
+    private lazy var titleStackView: UIStackView = {
+        let st = UIStackView(arrangedSubviews: [titleLabel, setLabel])
+        st.axis = .vertical
+        st.distribution = .fill
+        return st
+    }()
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 44, weight: .bold)
         label.textColor = .white
         label.text = String(localized: "Focus Mode")
+        return label
+    }()
+    
+    private lazy var setLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 36, weight: .bold)
+        label.textColor = .yellow
+        label.text = "1 Set"
         return label
     }()
     
@@ -41,22 +62,22 @@ class WorkingView: UIView {
     }
     
     private func addViews() {
-        [titleLabel, lottieContainerView].forEach { addSubview($0) }
+        [titleStackView, lottieContainerView].forEach { addSubview($0) }
     }
     
     private func setConstraints() {
-        titleLabelConstraints()
+        titleStackViewConstraints()
         lottieContainerViewConstraints()
         animationViewConstraints()
     }
     
-    private func titleLabelConstraints() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func titleStackViewConstraints() {
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 36),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 24)
+            titleStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 36),
+            titleStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            titleStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24)
         ])
     }
     

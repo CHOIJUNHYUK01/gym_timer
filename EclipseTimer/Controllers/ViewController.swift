@@ -62,6 +62,7 @@ final class ViewController: UIViewController {
     }
     
     @objc func startTimerTapped() {
+        setAnalytics("start_timer")
         let timerVC = TimerViewController()
         timerVC.totalSeconds = 60 * minuteSelected + secondSelected
         timerVC.restMethod = restMethodSelected

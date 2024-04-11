@@ -24,6 +24,10 @@
 		514293742B989D5C00545674 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 514293732B989D5C00545674 /* Lottie */; };
 		514293782B98A0BF00545674 /* workingLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 514293762B98A0BF00545674 /* workingLottie.json */; };
 		5142937B2B98A11300545674 /* restLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 5142937A2B98A11300545674 /* restLottie.json */; };
+		51989D7F2BC40F29001D3FC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 51989D7E2BC40F29001D3FC8 /* GoogleService-Info.plist */; };
+		51989D822BC410EB001D3FC8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 51989D812BC410EB001D3FC8 /* FirebaseAnalytics */; };
+		51989D842BC410EB001D3FC8 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 51989D832BC410EB001D3FC8 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		51989D872BC4119E001D3FC8 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51989D862BC4119E001D3FC8 /* FirebaseAnalytics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +51,8 @@
 		514293702B97101000545674 /* RestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestView.swift; sourceTree = "<group>"; };
 		514293762B98A0BF00545674 /* workingLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = workingLottie.json; sourceTree = "<group>"; };
 		5142937A2B98A11300545674 /* restLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restLottie.json; sourceTree = "<group>"; };
+		51989D7E2BC40F29001D3FC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		51989D862BC4119E001D3FC8 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51989D822BC410EB001D3FC8 /* FirebaseAnalytics in Frameworks */,
+				51989D842BC410EB001D3FC8 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				514293742B989D5C00545674 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,6 +89,8 @@
 		514293502B959D7C00545674 /* EclipseTimer */ = {
 			isa = PBXGroup;
 			children = (
+				51989D852BC41190001D3FC8 /* Utils */,
+				51989D7E2BC40F29001D3FC8 /* GoogleService-Info.plist */,
 				514293752B98A0AF00545674 /* Resources */,
 				514293512B959D7C00545674 /* AppDelegate.swift */,
 				514293532B959D7C00545674 /* SceneDelegate.swift */,
@@ -133,6 +143,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		51989D852BC41190001D3FC8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				51989D862BC4119E001D3FC8 /* FirebaseAnalytics.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -151,6 +169,8 @@
 			name = EclipseTimer;
 			packageProductDependencies = (
 				514293732B989D5C00545674 /* Lottie */,
+				51989D812BC410EB001D3FC8 /* FirebaseAnalytics */,
+				51989D832BC410EB001D3FC8 /* FirebaseAnalyticsWithoutAdIdSupport */,
 			);
 			productName = EclipseTimer;
 			productReference = 5142934E2B959D7C00545674 /* EclipseTimer.app */;
@@ -183,6 +203,7 @@
 			mainGroup = 514293452B959D7B00545674;
 			packageReferences = (
 				514293722B989D5C00545674 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				51989D802BC410EB001D3FC8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 5142934F2B959D7C00545674 /* Products */;
 			projectDirPath = "";
@@ -199,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				514293782B98A0BF00545674 /* workingLottie.json in Resources */,
+				51989D7F2BC40F29001D3FC8 /* GoogleService-Info.plist in Resources */,
 				510E8E4D2BA2EB6B0054A142 /* PrivacyInfo.xcprivacy in Resources */,
 				5142935E2B959D7E00545674 /* LaunchScreen.storyboard in Resources */,
 				512CC21A2BA0656A000A7E7C /* Localizable.xcstrings in Resources */,
@@ -222,6 +244,7 @@
 				512CC2132B9EFAB1000A7E7C /* RestMethod.swift in Sources */,
 				5142936B2B95BAF800545674 /* TimeRange.swift in Sources */,
 				514293522B959D7C00545674 /* AppDelegate.swift in Sources */,
+				51989D872BC4119E001D3FC8 /* FirebaseAnalytics.swift in Sources */,
 				5142936D2B97002E00545674 /* TimerViewController.swift in Sources */,
 				514293542B959D7C00545674 /* SceneDelegate.swift in Sources */,
 			);
@@ -378,7 +401,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GM5WM2FSF2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EclipseTimer/Info.plist;
@@ -393,7 +416,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lukechoi.EclipseTimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -411,7 +434,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GM5WM2FSF2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EclipseTimer/Info.plist;
@@ -426,7 +449,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lukechoi.EclipseTimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -470,6 +493,14 @@
 				minimumVersion = 4.4.1;
 			};
 		};
+		51989D802BC410EB001D3FC8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.23.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -477,6 +508,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 514293722B989D5C00545674 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		51989D812BC410EB001D3FC8 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51989D802BC410EB001D3FC8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		51989D832BC410EB001D3FC8 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51989D802BC410EB001D3FC8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

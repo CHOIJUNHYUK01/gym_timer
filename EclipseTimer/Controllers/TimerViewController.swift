@@ -13,6 +13,7 @@ class TimerViewController: UIViewController {
     // view
     private let workingView = WorkingView()
     private let restView = RestView()
+    private var setCount = 1
     
     // audio session
     private var ourAudioIsPlaying = false
@@ -107,6 +108,8 @@ class TimerViewController: UIViewController {
         guard let t = totalSeconds else { return }
         
         if elaspedTime == t {
+            setCount += 1
+            workingView.setCount = setCount
             AudioServicesPlaySystemSound(SystemSoundID(1016))
             checkBGMplaying()
             elaspedTime = 0
@@ -154,5 +157,7 @@ class TimerViewController: UIViewController {
         ourAudioIsPlaying = false
         timer?.invalidate()
         elaspedTime = 0
+        setCount = 1
+        workingView.setCount = 1
     }
 }
